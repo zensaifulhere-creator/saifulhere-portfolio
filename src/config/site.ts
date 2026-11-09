@@ -430,7 +430,7 @@ export const siteConfig: SiteConfig = {
       client: 'Global FinTech Consortium',
       outcomeMetric: 'Reduced UI regression bugs by 68% and accelerated sprint velocity by 3.2x across 40 engineers.',
       tools: ['Figma', 'React 19', 'Tailwind CSS', 'TypeScript', 'Tokens Studio'],
-      coverImage: '/src/assets/images/design_system_preview_1794041725106.jpg',
+      coverImage: '/assets/images/design_system_preview_1794041725106.jpg',
       aspectRatio: '16:9',
       featured: true,
       keyHighlights: [
@@ -460,7 +460,7 @@ export const siteConfig: SiteConfig = {
       client: 'Aura Capital',
       outcomeMetric: '+42% 30-day user retention and a 4.9 App Store rating across 12,000+ reviews.',
       tools: ['Framer', 'Figma', 'SwiftUI', 'Micro-Interactions', 'Motion'],
-      coverImage: '/src/assets/images/fintech_app_preview_1794041724777.jpg',
+      coverImage: '/assets/images/fintech_app_preview_1794041724777.jpg',
       aspectRatio: '4:3',
       featured: true,
       keyHighlights: [
@@ -490,7 +490,7 @@ export const siteConfig: SiteConfig = {
       client: 'Synergy Studio',
       outcomeMetric: 'Adopted by 1,800+ creative directors during private beta, running over 50,000 workflow nodes.',
       tools: ['React 19', 'WebGL', 'TypeScript', 'Tailwind CSS', 'Figma'],
-      coverImage: '/src/assets/images/ai_workspace_preview_1794041725532.jpg',
+      coverImage: '/assets/images/ai_workspace_preview_1794041725532.jpg',
       aspectRatio: '16:9',
       featured: true,
       keyHighlights: [
@@ -520,7 +520,7 @@ export const siteConfig: SiteConfig = {
       client: 'Aethel Atelier',
       outcomeMetric: 'Awarded Awwwards Site of the Day and generated a +38% increase in average order value.',
       tools: ['React 19', 'Next.js', 'Tailwind CSS', 'Motion', 'Figma'],
-      coverImage: '/src/assets/images/editorial_commerce_preview_1794041726777.jpg',
+      coverImage: '/assets/images/editorial_commerce_preview_1794041726777.jpg',
       aspectRatio: '4:3',
       featured: true,
       keyHighlights: [
@@ -549,7 +549,7 @@ export const siteConfig: SiteConfig = {
       role: 'Author & Core Developer',
       outcomeMetric: 'Over 2,400 monthly downloads on npm with 40+ active contributors.',
       tools: ['TypeScript', 'Node.js', 'Figma REST API', 'Tailwind CSS'],
-      coverImage: '/src/assets/images/design_system_preview_1794041725106.jpg',
+      coverImage: '/assets/images/design_system_preview_1794041725106.jpg',
       aspectRatio: '16:9',
       featured: false,
       keyHighlights: [
@@ -577,7 +577,7 @@ export const siteConfig: SiteConfig = {
       role: 'Creator & Engineer',
       outcomeMetric: 'Featured in Interaction Design Weekly with 15k prototype plays.',
       tools: ['React 19', 'Web Audio API', 'Tailwind CSS', 'Framer Motion'],
-      coverImage: '/src/assets/images/fintech_app_preview_1794041724777.jpg',
+      coverImage: '/assets/images/fintech_app_preview_1794041724777.jpg',
       aspectRatio: '4:3',
       featured: false,
       keyHighlights: [
@@ -604,7 +604,7 @@ export const siteConfig: SiteConfig = {
       quote:
         'Saiful is that rare hybrid: a designer with impeccable taste and an engineer who writes strict, production-grade TypeScript. He built our multi-brand token pipeline from scratch and united four disjointed engineering teams. The handoff friction literally evaporated.',
       avatarInitials: 'ER',
-      avatarImage: '/src/assets/images/client_elena_rostova_1794107707846.jpg',
+      avatarImage: '/assets/images/client_elena_rostova_1794107707846.jpg',
       verified: true,
       year: '2025',
       rating: 5,
@@ -619,7 +619,7 @@ export const siteConfig: SiteConfig = {
       quote:
         'Most agencies deliver static Figma files that fall apart in code. Saiful delivered a tactile, interactive React prototype with fluid gesture physics before we even touched production. Our investors were blown away, and our engineering team saved months of guesswork.',
       avatarInitials: 'MS',
-      avatarImage: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+      avatarImage: '/assets/images/client_marcus_sterling_1794107721263.jpg',
       verified: true,
       year: '2024',
       rating: 5,
