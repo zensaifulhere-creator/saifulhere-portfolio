@@ -38,7 +38,8 @@ PRICING & SCOPE TIERS (USD is the primary price; the BDT amount is the local pay
 - "Product & Interactive Prototype" ($950 / ৳120,000, 4-6 weeks): Full UX research, up to 15 hi-fi views, and a production-grade React prototype with micro-interaction physics.
 - "Design Engineering Retainer" ($650 / ৳80,000 per month): 20 hours/week dedicated design & code capacity, direct Slack/GitHub team integration, priority turnaround.
 
-FEATURED CLIENT TESTIMONIALS & REVIEWS:
+TESTIMONIAL SAMPLE CONTENT:
+- The testimonial section currently contains illustrative sample profiles and unverified placeholder copy, not confirmed client endorsements. Never describe these as real or verified reviews. Direct visitors to Saiful for authentic references.
 - Elena Rostova (VP of Product & Design, Consortium FinTech): "Saiful built our multi-brand token pipeline from scratch and united four disjointed engineering teams. The handoff friction literally evaporated. Cut component redesign cycles by 65%."
 - Marcus Sterling (Founder & CEO, Aura Capital): "Saiful delivered a tactile, interactive React prototype with fluid gesture physics before we even touched production. 4.9 App Store rating & 120k users."
 - Dr. Sophia Chen (Head of Engineering, Synergy Studio): "Saiful engineered our spatial node-graph canvas with breathtaking micro-interactions and zero framerate drops. 60 FPS WebGL on 4K displays."
@@ -66,12 +67,7 @@ export function generateStudioFallback(query: string): string {
   const q = query.toLowerCase();
 
   if (q.includes('review') || q.includes('testimonial') || q.includes('feedback') || q.includes('client say') || q.includes('endorse')) {
-    return `Here is direct feedback from leaders who have partnered with Saiful:
-• **Elena Rostova (VP of Product, Consortium FinTech)**: *"Saiful built our multi-brand token pipeline from scratch and united 4 engineering teams. Cut component redesign cycles by 65%."*
-• **Marcus Sterling (CEO, Aura Capital)**: *"Delivered a tactile interactive React prototype with fluid gesture physics before production. 4.9 App Store rating & 120k users."*
-• **Dr. Sophia Chen (Head of Eng, Synergy Studio)**: *"Engineered our spatial node-graph canvas with zero framerate drops at 60 FPS on 4K displays."*
-
-You can browse all verified reviews in the **Reviews** carousel section of the portfolio!`;
+    return `The review carousel currently contains sample profiles and illustrative copy, not verified client endorsements. If you'd like an authentic reference, please contact Saiful directly through the inquiry form.`;
   }
 
   if (q.includes('audit') || q.includes('roadmap') || q.includes('350')) {
@@ -155,7 +151,7 @@ Feel free to ask me about:
 • Product & Interactive Prototype ($950 / ৳120,000)
 • Design Engineering Retainer ($650 / ৳80,000 per month)
 • His **Three Design Invariants**
-• What clients and VPs of product say in **Client Reviews**
+• How to contact Saiful for authentic references (the review carousel currently shows samples)
 • His verified links on **LinkedIn, Instagram, Facebook, X, and Fiverr**
 • How he synchronizes **Figma Variables with Tailwind CSS tokens**
 • His featured projects like **Aurora Design System** and **Aura Mobile Banking**`;

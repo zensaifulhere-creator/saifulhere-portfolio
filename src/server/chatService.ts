@@ -4,7 +4,7 @@
  */
 
 import { GoogleGenAI } from '@google/genai';
-import { SYSTEM_INSTRUCTION, generateStudioFallback } from '../utils/knowledgeBase';
+import { SYSTEM_INSTRUCTION, generateStudioFallback } from '../utils/knowledgeBase.ts';
 
 export { SYSTEM_INSTRUCTION, generateStudioFallback };
 

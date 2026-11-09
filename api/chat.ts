@@ -4,7 +4,7 @@
  * Vercel Serverless Function Handler for /api/chat
  */
 
-import { executeChatQuery } from '../src/server/chatService';
+import { executeChatQuery } from '../src/server/chatService.ts';
 
 export default async function handler(req: any, res: any) {
   // Set CORS headers for seamless deployment
