@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Anton', sans-serif;
+  --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-script: 'Caveat', cursive;
+  --color-noir-950: #050505;
+  --color-noir-900: #090909;
+  --color-noir-850: #0f0f11;
+  --color-noir-800: #141416;
+  --color-noir-700: #1c1c20;
+  --color-crimson: #e32b3c;
+  --color-crimson-hover: #c92232;
+  --color-paper: #f2efeb;
+  --color-muted: #a09c9a;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #090909;
+}
+::-webkit-scrollbar-thumb {
+  background: #222226;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #e32b3c;
+}
+
+/* Smooth text rendering and cinematic scroll physics */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-noir-900);
+  color: var(--color-paper);
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-script {
+  font-family: var(--font-script);
+}
