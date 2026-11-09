@@ -45,8 +45,8 @@ export function createChatMessage(
 export const SUGGESTED_PROMPTS: SuggestedPrompt[] = [
   {
     id: 'p-1',
-    label: '৳65,000 Sprint Scope',
-    prompt: 'What deliverables are included in the ৳65,000 Design System Sprint?',
+    label: '$525 System Sprint',
+    prompt: 'What deliverables are included in the $525 Design System Sprint?',
     category: 'pricing',
   },
   {

@@ -216,7 +216,7 @@ export interface TestimonialItem {
   project: string;
   impact: string;
   avatarInitials: string;
-  avatarImage: string;
+  avatarImage?: string;
   verified: boolean;
   year: string;
   rating: number;

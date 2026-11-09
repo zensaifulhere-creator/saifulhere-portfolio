@@ -32,8 +32,8 @@ export const ProcessAndSkills: React.FC = () => {
             </p>
           </div>
 
-          {/* 3 Core Services Domains */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+          {/* Four Core Service Domains */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 sm:gap-8">
             {skillsHierarchy.map((group, idx) => (
               <div
                 key={idx}
@@ -87,7 +87,7 @@ export const ProcessAndSkills: React.FC = () => {
             </div>
 
             {/* Frosted Glass Grid with Low Red Accent */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10">
               {tools.map((tool, idx) => (
                 <div
                   key={idx}
@@ -138,7 +138,7 @@ export const ProcessAndSkills: React.FC = () => {
           </div>
 
           {/* 6-Step Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
             {processSteps.map((step, idx) => (
               <div
                 key={idx}

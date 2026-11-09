@@ -25,7 +25,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     name: '',
     email: '',
     service: selectedService || 'Design Systems Architecture',
-    budget: selectedBudget || '৳70,000 - ৳90,000 / month',
+    budget: selectedBudget || '$500–$650 / ৳60,000–৳80,000',
     message: '',
   });
 
@@ -283,6 +283,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                         <option value="Design Systems Architecture">Design Systems Architecture</option>
                         <option value="Interactive Prototype Development">Interactive Prototype Development</option>
                         <option value="Full-Stack Creative Frontend">Full-Stack Creative Frontend</option>
+                        <option value="UI/UX & Product Design">UI/UX & Product Design</option>
                         <option value="Mobile App UI/UX Design">Mobile App UI/UX Design</option>
                         <option value="Design Audit & Consulting">Design Audit & Consulting</option>
                       </select>
@@ -298,10 +299,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                         onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                         className="w-full px-4 py-3 bg-[#0a0a0c] border border-white/10 focus:border-[#e32b3c] focus:outline-none text-base sm:text-sm text-white font-sans transition-colors"
                       >
-                        <option value="৳50,000 - ৳80,000">৳50,000 - ৳80,000 (Design System Sprint)</option>
-                        <option value="৳100,000 - ৳150,000">৳100,000 - ৳150,000 (Flagship Prototype)</option>
-                        <option value="৳70,000 - ৳90,000 / month">৳70,000 - ৳90,000 / month (Dedicated Retainer)</option>
-                        <option value="৳150,000+">৳150,000+ (Custom Enterprise)</option>
+                        <option value="$300–$400 / ৳40,000–৳50,000">$300–$400 / ৳40,000–৳50,000 (UX Audit)</option>
+                        <option value="$450–$600 / ৳55,000–৳75,000">$450–$600 / ৳55,000–৳75,000 (Landing Page)</option>
+                        <option value="$500–$650 / ৳60,000–৳80,000">$500–$650 / ৳60,000–৳80,000 (Design System)</option>
+                        <option value="$900–$1,200 / ৳110,000–৳150,000">$900–$1,200 / ৳110,000–৳150,000 (Prototype)</option>
+                        <option value="$550–$750 / ৳70,000–৳90,000 per month">$550–$750 / ৳70,000–৳90,000 per month (Retainer)</option>
+                        <option value="$1,200+ / ৳150,000+">$1,200+ / ৳150,000+ (Custom Enterprise)</option>
                       </select>
                     </div>
                   </div>

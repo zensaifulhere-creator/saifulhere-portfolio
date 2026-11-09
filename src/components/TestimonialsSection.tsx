@@ -121,14 +121,14 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
               <span className="w-1.5 h-1.5 bg-[#e32b3c] animate-pulse" />
               <span>04 / Endorsements</span>
               <span className="text-white/20">·</span>
-              <span className="text-white/70">Client Proof & Feedback</span>
+              <span className="text-white/70">Client Feedback & Sample Profiles</span>
             </div>
             <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-white tracking-tight">
-              WHAT LEADERS SHIP <span className="text-[#e32b3c]">WITH SAIFUL</span>
+              WHAT GREAT PRODUCT WORK <span className="text-[#e32b3c]">LOOKS LIKE</span>
             </h2>
           </div>
           <p className="text-sm sm:text-base text-[#cfccc9] max-w-md font-sans leading-relaxed">
-            Direct feedback from product leads, VPs of design, and engineering directors who partnered on enterprise design systems and interactive prototypes.
+            These review cards include illustrative sample content. Replace each sample with permissioned client feedback before treating it as an endorsement.
           </p>
         </div>
 
@@ -164,7 +164,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
                       ))}
                     </div>
                     <span className="text-[11px] font-mono uppercase tracking-wider text-[#d4d1cc]">
-                      Verified Endorsement · {current.year}
+                      {current.verified ? `Verified Endorsement · ${current.year}` : `Sample Profile · ${current.year}`}
                     </span>
                   </div>
                 </div>
@@ -172,7 +172,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
                 {/* Impact Metric Chip */}
                 <div className="flex items-center gap-2 px-3.5 py-1.5 bg-[#e32b3c]/15 border border-[#e32b3c]/40 font-mono text-xs text-white shadow-sm">
                   <TrendingUp className="w-3.5 h-3.5 text-[#e32b3c]" />
-                  <span className="text-[#e2dedb] uppercase text-[10px] tracking-wide">Impact:</span>
+                  <span className="text-[#e2dedb] uppercase text-[10px] tracking-wide">{current.verified ? 'Impact:' : 'Sample impact:'}</span>
                   <span className="font-semibold text-white">{current.impact}</span>
                 </div>
 
@@ -200,12 +200,18 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
                       <div className="flex items-center gap-4">
                         {/* High-Resolution Client Photograph Portrait */}
                         <div className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 relative overflow-hidden bg-[#2d2e36] border border-white/30 shadow-lg">
-                          <img
-                            src={current.avatarImage}
-                            alt={`Portrait of ${current.author}`}
-                            className="w-full h-full object-cover object-center filter contrast-105"
-                            loading="eager"
-                          />
+                          {current.avatarImage ? (
+                            <img
+                              src={current.avatarImage}
+                              alt={`Portrait of ${current.author}`}
+                              className="w-full h-full object-cover object-center filter contrast-105"
+                              loading="eager"
+                            />
+                          ) : (
+                            <span className="w-full h-full flex items-center justify-center font-mono text-sm text-white">
+                              {current.avatarInitials}
+                            </span>
+                          )}
                           <span className="absolute bottom-0 right-0 w-3 h-3 bg-[#e32b3c] border-2 border-[#191a1e]" />
                         </div>
 
@@ -249,8 +255,8 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
               {/* Slide Counter & Progress */}
               <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-start">
                 <span className="font-mono text-xs text-white tracking-widest">
-                  <span className="text-[#e32b3c] font-bold">0{activeIndex + 1}</span>
-                  <span className="text-white/40"> / 0{total}</span>
+                  <span className="text-[#e32b3c] font-bold">{String(activeIndex + 1).padStart(2, '0')}</span>
+                  <span className="text-white/40"> / {String(total).padStart(2, '0')}</span>
                 </span>
 
                 <div className="w-28 sm:w-36 h-1 bg-white/15 overflow-hidden">
@@ -298,7 +304,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
           </div>
 
           {/* Direct Client Selector / Thumbnail Grid with Client Pictures */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 pt-2">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
             {testimonials.map((t, index) => {
               const isSelected = index === activeIndex;
               return (
@@ -320,11 +326,17 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
                   <div className="flex items-center gap-2.5 mb-2">
                     {/* Small Client Thumbnail Photo */}
                     <div className="w-7 h-7 shrink-0 overflow-hidden border border-white/20 bg-[#25262c]">
-                      <img
-                        src={t.avatarImage}
-                        alt={t.author}
-                        className="w-full h-full object-cover"
-                      />
+                      {t.avatarImage ? (
+                        <img
+                          src={t.avatarImage}
+                          alt={t.author}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="w-full h-full flex items-center justify-center font-mono text-[8px] text-white">
+                          {t.avatarInitials}
+                        </span>
+                      )}
                     </div>
                     <div className="flex items-center justify-between w-full">
                       <span className="font-mono text-[10px] text-white/50">

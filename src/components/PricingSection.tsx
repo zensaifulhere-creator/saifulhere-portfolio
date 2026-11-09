@@ -13,13 +13,13 @@ interface PricingSectionProps {
 
 export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectTier }) => {
   const { pricingTiers } = siteConfig;
-  const [activeTab, setActiveTab] = useState<'all' | 'sprint' | 'retainer'>('all');
+  const [activeTab, setActiveTab] = useState<'all' | 'project' | 'retainer'>('all');
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
   const filteredTiers = pricingTiers.filter((tier) => {
     if (activeTab === 'all') return true;
-    if (activeTab === 'sprint') return tier.id !== 'design-engineering-retainer';
-    if (activeTab === 'retainer') return tier.id === 'design-engineering-retainer';
+    if (activeTab === 'project') return tier.billingType === 'project';
+    if (activeTab === 'retainer') return tier.billingType === 'monthly';
     return true;
   });
 
@@ -33,7 +33,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectTier }) 
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#e32b3c] mb-2">
               <span>03 / Investment</span>
               <span aria-hidden="true">·</span>
-              <span>Bangladesh Market · BDT</span>
+              <span>International & Local · USD / BDT</span>
             </div>
             <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-white uppercase tracking-tight">
               TRANSPARENT PRICING & SCOPE
@@ -41,7 +41,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectTier }) 
           </div>
 
           <p className="text-sm text-[#a09c9a] max-w-md font-sans">
-            Clear Bangladesh-market pricing in taka. Final quotes depend on the agreed scope and deliverables.
+            USD is the headline price; local BDT prices and inquiry budgets are shown alongside it. Final scope is agreed before work begins.
           </p>
         </div>
 
@@ -61,16 +61,16 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectTier }) 
             </button>
 
             <button
-              onClick={() => setActiveTab('sprint')}
+              onClick={() => setActiveTab('project')}
               type="button"
               className={`px-3.5 sm:px-4 py-2 text-xs font-mono uppercase tracking-wider transition-all duration-200 flex items-center gap-1.5 cursor-pointer ${
-                activeTab === 'sprint'
+                activeTab === 'project'
                   ? 'bg-[#e32b3c] text-white shadow-lg shadow-[#e32b3c]/25 font-bold'
                   : 'text-[#a09c9a] hover:text-white hover:bg-white/[0.04]'
               }`}
             >
               <Clock className="w-3.5 h-3.5" />
-              <span>Fixed Sprints</span>
+              <span>Projects</span>
             </button>
 
             <button
@@ -89,16 +89,21 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectTier }) 
         </div>
 
         {/* Pricing Cards Grid with Motion Hover Feedback */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-          {filteredTiers.map((tier) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-stretch">
+          {filteredTiers.map((tier, index) => {
             const isHovered = hoveredCard === tier.id;
+            const centerLastCard = filteredTiers.length === 5 && index === 4;
 
             return (
               <div
                 key={tier.id}
+                className={centerLastCard ? 'xl:col-span-2 xl:col-start-2 xl:flex xl:justify-center' : ''}
+              >
+              <div
                 onMouseEnter={() => setHoveredCard(tier.id)}
                 onMouseLeave={() => setHoveredCard(null)}
-                className={`rounded-2xl p-8 flex flex-col justify-between transition-all duration-500 relative ${
+                style={centerLastCard ? { width: 'calc(50% - 0.75rem)' } : undefined}
+                className={`rounded-2xl p-8 flex flex-col justify-between transition-all duration-500 relative ${centerLastCard ? 'w-full' : ''} ${
                   tier.featured
                     ? 'bg-[#151518] border-2 border-[#e32b3c] shadow-2xl shadow-[#e32b3c]/15 lg:-translate-y-2.5'
                     : 'bg-[#121214] border border-white/[0.08] hover:border-white/25 hover:-translate-y-1'
@@ -133,9 +138,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectTier }) 
                         {tier.price}
                       </span>
                       <span className="text-xs font-mono text-[#a09c9a]">
-                        {tier.id === 'design-engineering-retainer' ? '/ month' : 'flat fee'}
+                        {tier.billingType === 'monthly' ? '/ month' : 'flat fee'}
                       </span>
                     </div>
+                    <p className="text-xs font-mono text-[#e32b3c]">Local BDT: {tier.localPrice}</p>
 
                     <p className="text-xs text-[#a09c9a] font-sans pt-1 leading-relaxed">
                       {tier.description}
@@ -184,12 +190,13 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectTier }) 
                 </div>
 
               </div>
+              </div>
             );
           })}
         </div>
 
         {/* Guarantees & Values Strip */}
-        <div className="p-6 sm:p-8 rounded-2xl bg-[#0e0e11] border border-white/[0.08] grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="p-6 sm:p-8 rounded-2xl bg-[#0e0e11] border border-white/[0.08] grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
           <div className="flex items-start gap-3">
             <ShieldCheck className="w-5 h-5 text-[#e32b3c] shrink-0 mt-0.5" />
             <div>
@@ -222,6 +229,18 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectTier }) 
               </h4>
               <p className="text-xs text-[#a09c9a] mt-1 font-sans">
                 Weekly interactive sandbox links and video async recaps ensure complete alignment before final production handoff.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <Check className="w-5 h-5 text-[#e32b3c] shrink-0 mt-0.5" />
+            <div>
+              <h4 className="text-xs font-mono uppercase text-white font-semibold tracking-wider">
+                Clear Scope & Milestones
+              </h4>
+              <p className="text-xs text-[#a09c9a] mt-1 font-sans">
+                Deliverables, timing, and any scope changes are agreed before work moves forward.
               </p>
             </div>
           </div>

@@ -35,7 +35,7 @@ export const StudioChatbot: React.FC<StudioChatbotProps> = ({ onNavigateToSectio
       id: 'welcome-01',
       role: 'assistant',
       content:
-        "Welcome to Saiful's Studio. I'm Saiful's AI powered by Gemini. Ask me about design token architecture, interactive prototyping in React 19, sprint pricing (৳65,000 / ৳120,000), or scheduling project work.",
+        "Welcome to Saiful's Studio. I'm Saiful's AI powered by Gemini. Ask about UX audits ($350), landing pages ($500), a design system sprint ($525), interactive prototypes ($950), or the monthly retainer ($650). Local BDT prices are shown too.",
       timestamp: 'Now',
     },
   ]);
@@ -379,7 +379,7 @@ export const StudioChatbot: React.FC<StudioChatbotProps> = ({ onNavigateToSectio
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Ask about design tokens, prototypes, pricing (৳65,000)..."
+                  placeholder="Ask about services, pricing, prototypes, or the retainer..."
                   rows={1}
                   disabled={isLoading}
                   className="w-full bg-transparent px-3 py-2.5 text-base sm:text-xs text-[#f2efeb] placeholder-[#555555] resize-none focus:outline-none disabled:opacity-50"

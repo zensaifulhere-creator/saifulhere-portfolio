@@ -31,10 +31,12 @@ FEATURED PROJECTS:
 - "Nexus Token CLI & Studio" (2025): Open-source utility compiling Figma Variables directly into CSS tokens and TypeScript types.
 - "Chronos Tactile Stopwatch" (2024): Keyboard-driven analog focus timer with synthesized audio feedback.
 
-PRICING & SCOPE TIERS (Bangladesh market pricing in BDT):
-- "Design System Sprint" (৳65,000 flat fee, 2-3 weeks): Complete token architecture in Figma & React (25+ WCAG AAA components, token dictionary, documentation).
-- "Product & Interactive Prototype" (৳120,000 flat fee, 4-6 weeks): Full UX research, up to 15 hi-fi views, and a production-grade React prototype with micro-interaction physics.
-- "Design Engineering Retainer" (৳80,000/month, dedicated partnership): 20 hours/week dedicated design & code capacity, direct Slack/GitHub team integration, priority turnaround.
+PRICING & SCOPE TIERS (USD is the primary price; the BDT amount is the local payment price):
+- "UX Audit & Roadmap" ($350 / ৳45,000, 1 week): Review up to 10 key screens or flows, usability and accessibility findings, prioritized recommendations, and a team walkthrough.
+- "Landing Page Sprint" ($500 / ৳60,000, 1-2 weeks): Conversion-focused responsive landing page design, clickable Figma prototype, and developer-ready handoff.
+- "Design System Sprint" ($525 / ৳65,000, 2-3 weeks): Complete token architecture in Figma & React (25+ WCAG AAA components, token dictionary, documentation).
+- "Product & Interactive Prototype" ($950 / ৳120,000, 4-6 weeks): Full UX research, up to 15 hi-fi views, and a production-grade React prototype with micro-interaction physics.
+- "Design Engineering Retainer" ($650 / ৳80,000 per month): 20 hours/week dedicated design & code capacity, direct Slack/GitHub team integration, priority turnaround.
 
 FEATURED CLIENT TESTIMONIALS & REVIEWS:
 - Elena Rostova (VP of Product & Design, Consortium FinTech): "Saiful built our multi-brand token pipeline from scratch and united four disjointed engineering teams. The handoff friction literally evaporated. Cut component redesign cycles by 65%."
@@ -72,8 +74,24 @@ export function generateStudioFallback(query: string): string {
 You can browse all verified reviews in the **Reviews** carousel section of the portfolio!`;
   }
 
-  if (q.includes('65,000') || q.includes('sprint') || q.includes('system sprint')) {
-    return `The **Design System Sprint (৳65,000 flat fee)** is a high-velocity 2–3 week engagement delivering:
+  if (q.includes('audit') || q.includes('roadmap') || q.includes('350')) {
+    return `The **UX Audit & Roadmap ($350 / ৳45,000)** takes about one week and includes:
+• Review of up to 10 key screens or flows.
+• Usability and accessibility findings with severity levels.
+• Annotated recommendations and a prioritized improvement roadmap.
+• A 45-minute walkthrough with your team.`;
+  }
+
+  if (q.includes('landing') || q.includes('500')) {
+    return `The **Landing Page Sprint ($500 / ৳60,000)** takes 1–2 weeks and includes:
+• Page structure and content hierarchy.
+• High-fidelity desktop and mobile designs.
+• A clickable Figma prototype and reusable design tokens.
+• Two focused revision rounds.`;
+  }
+
+  if (q.includes('525') || q.includes('65,000') || q.includes('sprint') || q.includes('system sprint')) {
+    return `The **Design System Sprint ($525 / ৳65,000 flat fee)** is a high-velocity 2–3 week engagement delivering:
 • **Figma Token Architecture**: Brand, Semantic, and Component variables.
 • **25+ Core Components**: Accessible WCAG AAA components built in React 19 & Tailwind CSS v4.
 • **Automated Pipeline**: Style Dictionary export configured for cross-repo synchronization.
@@ -83,16 +101,16 @@ You can browse all verified reviews in the **Reviews** carousel section of the p
 To book this sprint, send a note directly to **zen.saifulhere@gmail.com** or use the inquiry form below!`;
   }
 
-  if (q.includes('120,000') || q.includes('flagship') || q.includes('prototype')) {
-    return `The **Product & Interactive Prototype (৳120,000 flat fee)** is a 4–6 week flagship engagement designed for investor demos and major launches:
+  if (q.includes('950') || q.includes('120,000') || q.includes('flagship') || q.includes('prototype')) {
+    return `The **Product & Interactive Prototype ($950 / ৳120,000 flat fee)** is a 4–6 week flagship engagement designed for investor demos and major launches:
 • Full UX journey maps and information architecture for up to 15 key application views.
 • Production-grade interactive React 19 prototype with custom gesture physics and Framer Motion springs.
 • Tactile sensory states, micro-interactions, and responsive mobile + desktop optimization.
 • Complete design system handoff with zero developer ambiguity.`;
   }
 
-  if (q.includes('retainer') || q.includes('80,000') || q.includes('monthly')) {
-    return `The **Design Engineering Retainer (৳80,000/month)** provides 20 dedicated hours/week of senior design and creative frontend engineering:
+  if (q.includes('retainer') || q.includes('650') || q.includes('80,000') || q.includes('monthly')) {
+    return `The **Design Engineering Retainer ($650 / ৳80,000 per month)** provides 20 dedicated hours/week of senior design and creative frontend engineering:
 • Embedded directly into your team via Slack, GitHub, and Figma.
 • Complex micro-interactions, WebGL canvas experiments, and design token governance.
 • Priority 24-hour turnaround for critical UI sprint blockers and component PRs.`;
@@ -131,7 +149,11 @@ You can inspect the interactive token playground and full case study details in 
   return `I am Saiful's AI (Design Copilot). Saiful is a senior UI/UX Designer & Creative Frontend Engineer specializing in enterprise design systems, fluid micro-interactions, and tactile React 19 prototypes.
 
 Feel free to ask me about:
-• Deliverables in the **৳65,000 Design System Sprint** or **৳120,000 Flagship Prototype**
+• UX Audit & Roadmap ($350 / ৳45,000)
+• Landing Page Sprint ($500 / ৳60,000)
+• Design System Sprint ($525 / ৳65,000)
+• Product & Interactive Prototype ($950 / ৳120,000)
+• Design Engineering Retainer ($650 / ৳80,000 per month)
 • His **Three Design Invariants**
 • What clients and VPs of product say in **Client Reviews**
 • His verified links on **LinkedIn, Instagram, Facebook, X, and Fiverr**
