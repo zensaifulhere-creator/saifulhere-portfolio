@@ -25,7 +25,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     name: '',
     email: '',
     service: selectedService || 'Design Systems Architecture',
-    budget: selectedBudget || '$5,000 - $10,000',
+    budget: selectedBudget || '৳70,000 - ৳90,000 / month',
     message: '',
   });
 
@@ -298,10 +298,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                         onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                         className="w-full px-4 py-3 bg-[#0a0a0c] border border-white/10 focus:border-[#e32b3c] focus:outline-none text-base sm:text-sm text-white font-sans transition-colors"
                       >
-                        <option value="$1,500 - $3,000">$1,500 - $3,000 (Sprint Tier)</option>
-                        <option value="$3,000 - $5,000">$3,000 - $5,000 (Flagship Prototype)</option>
-                        <option value="$5,000 - $10,000">$5,000 - $10,000 (Dedicated Retainer)</option>
-                        <option value="$10,000+">$10,000+ (Custom Enterprise)</option>
+                        <option value="৳50,000 - ৳80,000">৳50,000 - ৳80,000 (Design System Sprint)</option>
+                        <option value="৳100,000 - ৳150,000">৳100,000 - ৳150,000 (Flagship Prototype)</option>
+                        <option value="৳70,000 - ৳90,000 / month">৳70,000 - ৳90,000 / month (Dedicated Retainer)</option>
+                        <option value="৳150,000+">৳150,000+ (Custom Enterprise)</option>
                       </select>
                     </div>
                   </div>

@@ -33,7 +33,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectTier }) 
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#e32b3c] mb-2">
               <span>03 / Investment</span>
               <span aria-hidden="true">·</span>
-              <span>Market-Standard Rates</span>
+              <span>Bangladesh Market · BDT</span>
             </div>
             <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-white uppercase tracking-tight">
               TRANSPARENT PRICING & SCOPE
@@ -41,7 +41,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectTier }) 
           </div>
 
           <p className="text-sm text-[#a09c9a] max-w-md font-sans">
-            Competitive senior rates based on market standards for independent design system engineers and product architects. No hidden agency markup.
+            Clear Bangladesh-market pricing in taka. Final quotes depend on the agreed scope and deliverables.
           </p>
         </div>
 

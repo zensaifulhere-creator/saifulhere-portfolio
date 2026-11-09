@@ -71,7 +71,7 @@ test('validateInquiryForm correctly validates input data', () => {
     name: 'Sarah Connor',
     email: 'sarah@skynet-defense.com',
     service: 'Design System Architecture',
-    budget: '$5,000 - $10,000',
+    budget: '৳70,000 - ৳90,000 / month',
     message: 'We want to collaborate on our core enterprise design library.',
   });
   assert.equal(valid.isValid, true);
@@ -206,8 +206,8 @@ test('generateStudioFallback provides accurate knowledge base responses', () => 
   assert.ok(socialReply.includes('facebook.com/saifulheree'));
 
   // Pricing inquiries
-  const pricingReply = generateStudioFallback('Tell me about the 1,850 sprint');
-  assert.ok(pricingReply.includes('$1,850'));
+  const pricingReply = generateStudioFallback('Tell me about the 65,000 sprint');
+  assert.ok(pricingReply.includes('৳65,000'));
   assert.ok(pricingReply.includes('Design System Sprint'));
 
   // Invariant inquiries

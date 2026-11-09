@@ -33,7 +33,7 @@ export default function App() {
 
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [selectedService, setSelectedService] = useState<string>('Design Systems Architecture');
-  const [selectedBudget, setSelectedBudget] = useState<string>('$5,000 - $10,000');
+  const [selectedBudget, setSelectedBudget] = useState<string>('৳70,000 - ৳90,000 / month');
 
   const toggleMotion = () => {
     setMotionEnabled((prev) => {
