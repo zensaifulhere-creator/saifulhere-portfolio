@@ -4,7 +4,8 @@
  */
 
 import React, { useState } from 'react';
-import { Check, ArrowRight, ShieldCheck, Zap, Sparkles, Clock, Calendar } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import { Check, ArrowRight, ShieldCheck, Zap, Sparkles, Clock, Calendar, X } from 'lucide-react';
 import { siteConfig } from '../config/site';
 
 interface PricingSectionProps {
@@ -15,13 +16,23 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectTier }) 
   const { pricingTiers } = siteConfig;
   const [activeTab, setActiveTab] = useState<'all' | 'project' | 'retainer'>('all');
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [activeTier, setActiveTier] = useState<(typeof pricingTiers)[number] | null>(null);
 
+  const pricingOrder = ['ux-audit-roadmap', 'landing-page-sprint', 'product-prototype-flagship', 'design-system-sprint', 'design-engineering-retainer'];
   const filteredTiers = pricingTiers.filter((tier) => {
     if (activeTab === 'all') return true;
     if (activeTab === 'project') return tier.billingType === 'project';
     if (activeTab === 'retainer') return tier.billingType === 'monthly';
     return true;
-  });
+  }).sort((a, b) => pricingOrder.indexOf(a.id) - pricingOrder.indexOf(b.id));
+  const packageLabels: Record<string, string> = {
+    'ux-audit-roadmap': 'Affordable',
+    'landing-page-sprint': 'Standard',
+    'product-prototype-flagship': 'Premium',
+    'design-system-sprint': 'Popular',
+    'design-engineering-retainer': 'Starter',
+  };
+  const cardHeights = ['xl:min-h-[340px]', 'xl:min-h-[405px]', 'xl:min-h-[485px]', 'xl:min-h-[405px]', 'xl:min-h-[340px]'];
 
   return (
     <section id="pricing" className="py-20 md:py-28 border-b border-white/[0.08] relative">
@@ -88,112 +99,125 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectTier }) 
           </div>
         </div>
 
-        {/* Pricing Cards Grid with Motion Hover Feedback */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-stretch">
+        {/* Five-card, stepped pricing layout inspired by the supplied reference */}
+        <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ${filteredTiers.length === 5 ? 'xl:grid-cols-5' : 'xl:grid-cols-4'} gap-4 xl:gap-3 items-center`}>
           {filteredTiers.map((tier, index) => {
             const isHovered = hoveredCard === tier.id;
-            const centerLastCard = filteredTiers.length === 5 && index === 4;
+            const isFeatured = tier.featured;
 
             return (
-              <div
+              <motion.article
                 key={tier.id}
-                className={centerLastCard ? 'xl:col-span-2 xl:col-start-2 xl:flex xl:justify-center' : ''}
-              >
-              <div
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.4, delay: index * 0.06 }}
                 onMouseEnter={() => setHoveredCard(tier.id)}
                 onMouseLeave={() => setHoveredCard(null)}
-                style={centerLastCard ? { width: 'calc(50% - 0.75rem)' } : undefined}
-                className={`rounded-2xl p-8 flex flex-col justify-between transition-all duration-500 relative ${centerLastCard ? 'w-full' : ''} ${
-                  tier.featured
-                    ? 'bg-[#151518] border-2 border-[#e32b3c] shadow-2xl shadow-[#e32b3c]/15 lg:-translate-y-2.5'
-                    : 'bg-[#121214] border border-white/[0.08] hover:border-white/25 hover:-translate-y-1'
-                } ${isHovered && !tier.featured ? 'border-[#e32b3c]/40 shadow-xl' : ''}`}
+                className={`rounded-2xl p-5 sm:p-6 flex flex-col justify-between transition-all duration-500 relative overflow-hidden ${cardHeights[index] || 'xl:min-h-[380px]'} ${
+                  isFeatured
+                    ? 'bg-[#171417] border-2 border-[#e32b3c] shadow-2xl shadow-[#e32b3c]/20 xl:scale-[1.03]'
+                    : 'bg-[#121214] border border-white/[0.10] hover:border-[#e32b3c]/50 hover:-translate-y-1'
+                } ${isHovered && !isFeatured ? 'shadow-xl shadow-[#e32b3c]/10' : ''}`}
               >
-                {/* Luminous Animated Aura for Featured Tier */}
-                {tier.featured && (
-                  <>
-                    <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-[#e32b3c]/30 to-amber-500/20 opacity-40 blur-xl pointer-events-none -z-10 animate-pulse" />
-                    <div className="absolute -top-3.5 left-8 px-3.5 py-1 rounded-full bg-[#e32b3c] text-white text-[10px] font-mono uppercase tracking-widest font-bold shadow-md flex items-center gap-1.5">
-                      <Sparkles className="w-3 h-3 animate-spin" style={{ animationDuration: '4s' }} />
-                      <span>Flagship / Most Requested</span>
-                    </div>
-                  </>
-                )}
-
-                <div className="space-y-6">
-                  {/* Header */}
-                  <div className="space-y-2 border-b border-white/[0.06] pb-6">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono uppercase text-[#a09c9a] tracking-wider">
-                        {tier.period}
-                      </span>
-                    </div>
-
-                    <h3 className="font-display text-2xl text-white tracking-wide">
-                      {tier.title}
-                    </h3>
-
-                    <div className="flex items-baseline gap-2 pt-2">
-                      <span className="font-display text-4xl sm:text-5xl text-white tabular-nums tracking-tight">
-                        {tier.price}
-                      </span>
-                      <span className="text-xs font-mono text-[#a09c9a]">
-                        {tier.billingType === 'monthly' ? '/ month' : 'flat fee'}
-                      </span>
-                    </div>
-                    <p className="text-xs font-mono text-[#e32b3c]">Local BDT: {tier.localPrice}</p>
-
-                    <p className="text-xs text-[#a09c9a] font-sans pt-1 leading-relaxed">
-                      {tier.description}
-                    </p>
-                  </div>
-
-                  {/* Target Audience Note */}
-                  <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.06] text-xs text-[#f2efeb]/80 font-sans">
-                    <span className="text-[#e32b3c] font-semibold">Fit: </span>
-                    {tier.targetFor}
-                  </div>
-
-                  {/* Deliverables Checklist with Micro-Interactions */}
-                  <div className="space-y-3 pt-2">
-                    <span className="text-[11px] font-mono uppercase text-white/50 tracking-wider block">
-                      Scope & Included Deliverables:
+                {isFeatured && <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#e32b3c] via-amber-300 to-[#e32b3c]" />}
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-4">
+                    <span className={`text-[10px] font-mono uppercase tracking-[0.18em] ${isFeatured ? 'text-[#ff6472]' : 'text-[#a09c9a]'}`}>
+                      {packageLabels[tier.id] || tier.period}
                     </span>
-                    <ul className="space-y-2.5">
-                      {tier.deliverables.map((item, idx) => (
-                        <li
-                          key={idx}
-                          className="flex items-start gap-2.5 text-xs text-[#f2efeb] group/item transition-colors"
-                        >
-                          <Check className="w-4 h-4 text-[#e32b3c] shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform" />
-                          <span className="font-sans leading-relaxed text-white/90">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    {isFeatured && <Sparkles className="w-4 h-4 text-[#e32b3c]" />}
+                  </div>
+                  <h3 className="font-display text-xl sm:text-2xl text-white tracking-wide leading-tight min-h-[3.5rem]">
+                    {tier.title}
+                  </h3>
+                  <div className="flex items-baseline gap-1.5 pt-3">
+                    <span className="font-display text-3xl sm:text-4xl text-white tabular-nums tracking-tight">
+                      {tier.price}
+                    </span>
+                    <span className="text-[10px] font-mono text-[#a09c9a]">
+                      {tier.billingType === 'monthly' ? '/ month' : 'one-time'}
+                    </span>
+                  </div>
+                  <p className="text-[11px] font-mono text-[#e32b3c] mt-1">Local BDT: {tier.localPrice}</p>
+                  <p className="text-xs text-[#a09c9a] font-sans mt-4 leading-relaxed line-clamp-3">
+                    {tier.description}
+                  </p>
+                  <div className="mt-4 pt-3 border-t border-white/[0.08]">
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-white/50 mb-2">Includes</p>
+                    <p className="text-xs text-white/80 leading-relaxed line-clamp-2">{tier.deliverables.slice(0, 2).join(' · ')}</p>
                   </div>
                 </div>
-
-                {/* Action Button */}
-                <div className="pt-8 mt-6 border-t border-white/[0.06]">
+                <div className="space-y-2 mt-5">
+                  <button
+                    type="button"
+                    onClick={() => setActiveTier(tier)}
+                    className="w-full py-2.5 px-3 border border-white/15 hover:border-[#e32b3c]/70 text-[#d4d1cc] hover:text-white text-[10px] font-mono uppercase tracking-widest transition-colors"
+                  >
+                    View Full Scope
+                  </button>
                   <button
                     onClick={() => onSelectTier(tier.serviceName, tier.budgetValue)}
                     type="button"
-                    className={`w-full py-3.5 px-6 rounded-lg font-semibold text-xs uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 group/btn ${
-                      tier.featured
-                        ? 'bg-[#e32b3c] hover:bg-[#c92232] text-white shadow-lg shadow-[#e32b3c]/30 hover:shadow-[#e32b3c]/50'
-                        : 'bg-white/10 hover:bg-[#e32b3c] hover:text-white text-white'
+                    className={`w-full py-3 px-3 font-semibold text-[10px] uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 group/btn ${
+                      isFeatured ? 'bg-[#e32b3c] hover:bg-[#c92232] text-white' : 'bg-white/10 hover:bg-[#e32b3c] hover:text-white text-white'
                     }`}
                   >
                     <span>{tier.ctaLabel}</span>
-                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
                   </button>
                 </div>
-
-              </div>
-              </div>
+              </motion.article>
             );
           })}
         </div>
+
+        <AnimatePresence>
+          {activeTier && (
+            <motion.div
+              className="fixed inset-0 z-[70] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              onMouseDown={(event) => { if (event.target === event.currentTarget) setActiveTier(null); }}
+            >
+              <motion.section
+                role="dialog" aria-modal="true" aria-labelledby="pricing-detail-title"
+                initial={{ opacity: 0, y: 24, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 16, scale: 0.98 }}
+                transition={{ duration: 0.22 }}
+                className="relative w-full max-w-2xl max-h-[88vh] overflow-y-auto p-6 sm:p-9 bg-[#101012] border border-white/15 shadow-2xl"
+              >
+                <button type="button" onClick={() => setActiveTier(null)} aria-label="Close package details" className="absolute top-4 right-4 p-2 text-white/60 hover:text-white">
+                  <X className="w-4 h-4" />
+                </button>
+                <p className="text-xs font-mono uppercase tracking-widest text-[#e32b3c] mb-3">{packageLabels[activeTier.id]} / {activeTier.period}</p>
+                <h3 id="pricing-detail-title" className="font-display text-3xl sm:text-4xl text-white pr-8">{activeTier.title}</h3>
+                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mt-4">
+                  <span className="font-display text-4xl text-white">{activeTier.price}</span>
+                  <span className="text-sm text-[#a09c9a]">{activeTier.billingType === 'monthly' ? 'per month' : 'one-time'}</span>
+                  <span className="text-sm font-mono text-[#e32b3c]">Local BDT: {activeTier.localPrice}</span>
+                </div>
+                <p className="text-sm text-[#cfccc9] leading-relaxed mt-5">{activeTier.description}</p>
+                <div className="mt-5 p-4 bg-white/[0.03] border border-white/[0.08] text-sm text-white/80 leading-relaxed">
+                  <span className="text-[#e32b3c] font-semibold">Best for: </span>{activeTier.targetFor}
+                </div>
+                <h4 className="mt-7 mb-3 text-xs font-mono uppercase tracking-widest text-white/60">Scope & deliverables</h4>
+                <ul className="space-y-3">
+                  {activeTier.deliverables.map((item) => (
+                    <li key={item} className="flex gap-3 text-sm text-white/90 leading-relaxed">
+                      <Check className="w-4 h-4 text-[#e32b3c] shrink-0 mt-0.5" />{item}
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  type="button"
+                  onClick={() => { onSelectTier(activeTier.serviceName, activeTier.budgetValue); setActiveTier(null); }}
+                  className="w-full sm:w-auto mt-8 px-6 py-3 bg-[#e32b3c] hover:bg-[#c92232] text-white text-xs font-semibold uppercase tracking-widest transition-colors"
+                >
+                  {activeTier.ctaLabel} <ArrowRight className="inline w-4 h-4 ml-2" />
+                </button>
+              </motion.section>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Guarantees & Values Strip */}
         <div className="p-6 sm:p-8 rounded-2xl bg-[#0e0e11] border border-white/[0.08] grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">

@@ -6,6 +6,8 @@
 
 import { executeChatQuery } from '../src/server/chatService.ts';
 
+export const config = { maxDuration: 30 };
+
 export default async function handler(req: any, res: any) {
   // Set CORS headers for seamless deployment
   res.setHeader('Access-Control-Allow-Credentials', 'true');

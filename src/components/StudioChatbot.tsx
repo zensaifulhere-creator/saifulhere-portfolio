@@ -64,20 +64,23 @@ export const StudioChatbot: React.FC<StudioChatbotProps> = ({ onNavigateToSectio
     }
   }, [isOpen, messages, isLoading]);
 
-  const handleSendMessage = async (textToSend?: string) => {
+  const handleSendMessage = async (textToSend?: string, retryLastMessage = false) => {
     const rawText = textToSend || inputValue;
     const validation = validateChatMessage(rawText);
     if (!validation.isValid) return;
 
     const userMessage = createChatMessage('user', rawText);
-    const updatedMessages = [...messages, userMessage];
-    setMessages(updatedMessages);
+    const updatedMessages = retryLastMessage ? messages : [...messages, userMessage];
+    if (!retryLastMessage) setMessages(updatedMessages);
     if (!textToSend) setInputValue('');
     setIsLoading(true);
     setApiError(null);
 
     try {
-      const payloadMessages = updatedMessages.map((m) => ({
+      const conversation = retryLastMessage && updatedMessages.at(-1)?.role === 'assistant'
+        ? updatedMessages.slice(0, -1)
+        : updatedMessages;
+      const payloadMessages = conversation.map((m) => ({
         role: m.role,
         content: m.content,
       }));
@@ -98,13 +101,27 @@ export const StudioChatbot: React.FC<StudioChatbotProps> = ({ onNavigateToSectio
 
       const data = await res.json();
       const aiReply = createChatMessage('assistant', data.text);
-      setMessages((prev) => [...prev, aiReply]);
+      setMessages((prev) => {
+        const withoutPreviousFallback = retryLastMessage && prev.at(-1)?.role === 'assistant'
+          ? prev.slice(0, -1)
+          : prev;
+        return [...withoutPreviousFallback, aiReply];
+      });
+      if (String(data.modelUsed || '').startsWith('studio-concierge')) {
+        setApiError('Gemini is temporarily unavailable. This is a local portfolio answer; try again shortly.');
+      }
     } catch (err: any) {
       console.warn('Network / API issue, using local studio concierge fallback:', err);
       // Graceful fallback guarantees 100% uptime on Vercel or offline
       const fallbackText = generateStudioFallback(rawText);
       const aiReply = createChatMessage('assistant', fallbackText);
-      setMessages((prev) => [...prev, aiReply]);
+      setMessages((prev) => {
+        const withoutPreviousFallback = retryLastMessage && prev.at(-1)?.role === 'assistant'
+          ? prev.slice(0, -1)
+          : prev;
+        return [...withoutPreviousFallback, aiReply];
+      });
+      setApiError('Could not reach Gemini. Showing a local portfolio answer instead. Check your connection and retry.');
     } finally {
       setIsLoading(false);
     }
@@ -210,7 +227,7 @@ export const StudioChatbot: React.FC<StudioChatbotProps> = ({ onNavigateToSectio
                     </span>
                   </div>
                   <div className="text-[9px] sm:text-[10px] font-mono text-[#666666] tracking-wider">
-                    ONLINE · {selectedModel === 'gemini-3.8-flash' ? 'GEMINI 3.8 FLASH' : 'GEMINI 3.1 LITE'}
+                    {isLoading ? 'CONNECTING TO GEMINI…' : apiError ? 'GEMINI RETRY AVAILABLE' : `GEMINI · ${selectedModel === 'gemini-3.8-flash' ? '3.8 FLASH' : '3.1 LITE'}`}
                   </div>
                 </div>
               </div>
@@ -339,7 +356,10 @@ export const StudioChatbot: React.FC<StudioChatbotProps> = ({ onNavigateToSectio
                   <div className="flex-1">
                     <p className="font-semibold">{apiError}</p>
                     <button
-                      onClick={() => handleSendMessage()}
+                      onClick={() => {
+                        const lastUserMessage = [...messages].reverse().find((message) => message.role === 'user');
+                        if (lastUserMessage) handleSendMessage(lastUserMessage.content, true);
+                      }}
                       className="mt-1 text-[11px] underline text-[#f2efeb] hover:text-[#e32b3c] cursor-pointer"
                     >
                       Retry last message

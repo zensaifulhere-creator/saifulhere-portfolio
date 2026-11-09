@@ -36,38 +36,47 @@ export async function executeChatQuery(
       const ai = new GoogleGenAI({
         apiKey: cleanApiKey,
         httpOptions: {
+          timeout: 7000,
+          retryOptions: { attempts: 1 },
           headers: {
             'User-Agent': 'saifulhere-portfolio',
           },
         },
       });
 
-      const validModels = ['gemini-3.8-flash', 'gemini-3.1-flash-lite', 'gemini-4-argon'];
+      const validModels = ['gemini-3.8-flash', 'gemini-3.1-flash-lite', 'gemini-3.7-flash'];
       const selectedModel = validModels.includes(model) ? model : 'gemini-3.8-flash';
+      const modelFallback = 'gemini-3.7-flash';
 
       const contents = messages.map((m) => ({
         role: m.role === 'assistant' || m.role === 'model' ? 'model' : 'user',
         parts: [{ text: m.content }],
       }));
 
-      const apiPromise = ai.models.generateContent({
-        model: selectedModel,
-        contents,
-        config: {
-          systemInstruction: SYSTEM_INSTRUCTION,
-        },
-      });
+      const modelsToTry = selectedModel === modelFallback
+        ? [selectedModel]
+        : [selectedModel, modelFallback];
 
-      const timeoutPromise = new Promise<never>((_, reject) =>
-        setTimeout(() => reject(new Error('Gemini API request timed out')), 3500)
-      );
-
-      const response: any = await Promise.race([apiPromise, timeoutPromise]);
-      const replyText = response.text || generateStudioFallback(latestUserMsg);
+      for (const candidateModel of modelsToTry) {
+        try {
+          const response = await ai.models.generateContent({
+            model: candidateModel,
+            contents,
+            config: {
+              systemInstruction: SYSTEM_INSTRUCTION,
+              abortSignal: AbortSignal.timeout(7000),
+            },
+          });
+          const replyText = response.text?.trim();
+          if (replyText) return { text: replyText, modelUsed: candidateModel };
+        } catch (err: any) {
+          console.warn(`Gemini model ${candidateModel} failed:`, err?.message || err);
+        }
+      }
 
       return {
-        text: replyText,
-        modelUsed: selectedModel,
+        text: generateStudioFallback(latestUserMsg),
+        modelUsed: 'studio-concierge-fallback',
       };
     } catch (err: any) {
       console.warn('Gemini API call returned fallback:', err?.message || err);

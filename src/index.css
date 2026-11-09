@@ -55,3 +55,33 @@ body {
 .font-script {
   font-family: var(--font-script);
 }
+
+@keyframes process-marquee {
+  to {
+    transform: translate3d(calc(-50% - 0.75rem), 0, 0);
+  }
+}
+
+.process-marquee-track {
+  animation: process-marquee 48s linear infinite;
+}
+
+.process-marquee-viewport:hover .process-marquee-track,
+.process-marquee-viewport:focus-within .process-marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .process-marquee-track {
+    animation: none;
+    transform: none;
+  }
+
+  .process-marquee-duplicate {
+    display: none;
+  }
+
+  .process-marquee-viewport {
+    overflow-x: auto;
+  }
+}

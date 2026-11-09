@@ -137,44 +137,56 @@ export const ProcessAndSkills: React.FC = () => {
             </p>
           </div>
 
-          {/* 6-Step Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
-            {processSteps.map((step, idx) => (
-              <div
-                key={idx}
-                className="p-6 sm:p-8 bg-[#121214]/80 backdrop-blur-md border border-white/[0.08] hover:border-white/20 transition-all flex flex-col justify-between space-y-6"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="font-display text-3xl text-[#e32b3c] tracking-tight">
-                      {step.number}
-                    </span>
-                    <span className="text-[11px] font-mono text-[#a09c9a] uppercase">Phase {idx + 1}</span>
-                  </div>
-
-                  <h3 className="font-display text-xl text-white tracking-wide">
-                    {step.title}
-                  </h3>
-
-                  <p className="text-sm text-[#a09c9a] leading-relaxed font-sans">
-                    {step.description}
-                  </p>
-                </div>
-
-                {/* Deliverables List (Unboxed Text with Separators) */}
-                <div className="pt-4 border-t border-white/[0.06] space-y-1.5">
-                  <span className="text-[11px] font-mono uppercase text-white/50 block">Core Deliverables:</span>
-                  <div className="text-xs text-[#f2efeb] font-sans flex flex-wrap gap-x-2 gap-y-1">
-                    {step.deliverables.map((del, dIdx) => (
-                      <span key={dIdx} className="inline-flex items-center">
-                        {dIdx > 0 && <span className="text-white/20 mr-2">·</span>}
-                        {del}
-                      </span>
+          {/* Continuous cinematic workflow loop: four cards in view on wide screens */}
+          <div className="relative">
+            <div className="flex items-center justify-between gap-4 mb-4 text-[10px] font-mono uppercase tracking-[0.18em] text-[#888888]">
+              <span>Six phases · continuous workflow</span>
+              <span className="text-[#e32b3c]">Moving left · hover to pause</span>
+            </div>
+            <div
+              className="process-marquee-viewport relative overflow-hidden"
+              role="region"
+              aria-label="Six-step design workflow, moving left continuously. Hover to pause."
+              style={{ '--process-card-width': 'calc((min(100vw, 80rem) - 8.5rem) / 4)' } as React.CSSProperties}
+            >
+              <div className="process-marquee-track flex w-max gap-6 py-3">
+                {[0, 1].map((copy) => (
+                  <div
+                    key={copy}
+                    className={`process-marquee-sequence flex gap-6 ${copy === 1 ? 'process-marquee-duplicate' : ''}`}
+                    aria-hidden={copy === 1 ? 'true' : undefined}
+                  >
+                    {processSteps.map((step, idx) => (
+                      <article
+                        key={`${copy}-${step.number}`}
+                        className="w-[min(82vw,340px)] xl:w-[var(--process-card-width)] shrink-0 min-h-[390px] p-6 sm:p-8 bg-[#121214]/90 backdrop-blur-md border border-white/[0.10] hover:border-[#e32b3c]/50 transition-colors flex flex-col justify-between space-y-6"
+                      >
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between">
+                            <span className="font-display text-3xl text-[#e32b3c] tracking-tight">{step.number}</span>
+                            <span className="text-[11px] font-mono text-[#a09c9a] uppercase">Phase {idx + 1}</span>
+                          </div>
+                          <h3 className="font-display text-xl text-white tracking-wide">{step.title}</h3>
+                          <p className="text-sm text-[#a09c9a] leading-relaxed font-sans">{step.description}</p>
+                        </div>
+                        <div className="pt-4 border-t border-white/[0.06] space-y-1.5">
+                          <span className="text-[11px] font-mono uppercase text-white/50 block">Core Deliverables:</span>
+                          <div className="text-xs text-[#f2efeb] font-sans flex flex-wrap gap-x-2 gap-y-1">
+                            {step.deliverables.map((del, dIdx) => (
+                              <span key={dIdx} className="inline-flex items-center">
+                                {dIdx > 0 && <span className="text-white/20 mr-2">·</span>}{del}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </article>
                     ))}
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
+              <div aria-hidden="true" className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#090909] to-transparent pointer-events-none" />
+              <div aria-hidden="true" className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#090909] to-transparent pointer-events-none" />
+            </div>
           </div>
 
         </div>
